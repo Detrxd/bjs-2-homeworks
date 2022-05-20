@@ -1,7 +1,7 @@
 function compareArrays(arr1, arr2) {
 
   function compareValue(_, index) {
-    return arr1[index] === arr2[index]
+    return arr1[index] === arr2[index] && arr1.length === arr2.length;
   }
 
   let result = arr1.every(compareValue);
@@ -10,6 +10,7 @@ function compareArrays(arr1, arr2) {
 
 console.log(compareArrays([1, 2, 3], [1, 2, 3]))
 console.log(compareArrays([1, 2, 3], [1, 2, 2]))
+console.log(compareArrays([1,2], [1,2,3]))
 
 function advancedFilter(arr) {
 
@@ -29,7 +30,7 @@ function advancedFilter(arr) {
 
 }
 console.log(advancedFilter([1, 2, 3, 6]));
-
+console.log(advancedFilter([8,9,5,4,8,3,5]));
 
 
 
