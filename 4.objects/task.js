@@ -3,7 +3,6 @@ function Student(name, gender, age) {
   this.gender = gender;
   this.age = age;
   this.marks = [];
-  let excluded;
 }
 
 Student.prototype.setSubject = function (subjectName) {
@@ -12,7 +11,7 @@ Student.prototype.setSubject = function (subjectName) {
 
 Student.prototype.addMark = function (mark) {
   if (this.marks === undefined) {
-    this.marks = mark;
+    this.marks = [mark];
   } else {
     this.marks.push(mark);
   }
