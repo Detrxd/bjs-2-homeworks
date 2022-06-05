@@ -1,90 +1,68 @@
 class PrintEditionItem {
-    constructor(props) {
-        this.name = props.name;
-        this.releaseDate = props.releaseDate;
-        this.pagesCount = props.pagesCount;
-        this.state = props.state || 100;
-        this.type = props.type || null;
-    }
-    fix = function () {
-        this.state = this.state * 1.5;
+
+    constructor(name, releaseDate, pagesCount, state = 100, type = null) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.pagesCount = pagesCount;
+        this.__state = state;
+        this.type = type;
     }
 
-    set repairItem(value) {
-        if (value === 0) {
-            this.state = 0
-        } else if (value > 100) {
-            this.state = 100
-        } else {
-            this.state = this.state;
+
+    fix() {
+        if (this.state < 100) {
+            this.state = 100;
+            return this.state;
         }
     }
 
-    get itemState() {
-        return `${this.state}`
+    set state(value) {
+        if (value === 0) {
+            this.__state = 0
+        }
+        if (value === 100) {
+            this.__state = 100
+        }
+    }
+
+    get state() {
+        return this.__state;
     }
 }
 
-// const sherlock = new PrintEditionItem({
-//     name:"Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе",
-//     releaseDate: 2019,
-//     pagesCount: 1008
-// }
-// );
-
-// console.log(sherlock.releaseDate); //2019
-// console.log(sherlock.state); //100
-// sherlock.fix();
-// console.log(sherlock.state); //100
-
-
 class Magazine extends PrintEditionItem {
     constructor(name, releaseDate, pagesCount, state = 100, type = "magazine") {
-        super({ name, releaseDate, pagesCount, state, type })
+        super(name, releaseDate, pagesCount, state, type)
     }
 }
 
 class Book extends PrintEditionItem {
-    constructor(name, author, releaseDate, pagesCount, state = 100, type = "Book") {
-        super({ name, releaseDate, pagesCount, state, type })
+    constructor(author, name, releaseDate, pagesCount, state = 100, type = "book") {
+        super(name, releaseDate, pagesCount, state, type)
         this.author = author;
     }
 }
 
 class NovelBook extends Book {
     constructor(name, author, releaseDate, pagesCount, state = 100, type = "novel") {
-        super({ name, author, releaseDate, pagesCount, state, type })
+        super(name, author, releaseDate, pagesCount, state, type)
 
     }
 }
 
 class FantasticBook extends Book {
     constructor(name, author, releaseDate, pagesCount, state = 100, type = "fantastic") {
-        super({ name, author, releaseDate, pagesCount, state, type })
+        super(name, author, releaseDate, pagesCount, state, type)
 
     }
 }
 
 class DetectiveBook extends Book {
     constructor(name, author, releaseDate, pagesCount, state = 100, type = "detective") {
-        super({ name, author, releaseDate, pagesCount, state, type })
+        super(name, author, releaseDate, pagesCount, state, type)
 
     }
 }
-
-// const picknick = new FantasticBook(
-//     "Аркадий и Борис Стругацкие",
-//     "Пикник на обочине",
-//     1972,
-//     168
-// );
-
-// console.log(picknick.author);
-// picknick.state = 10;
-// console.log(picknick.state);
-// console.log(picknick);
-// picknick.fix();
-// console.log(picknick.state)
 
 class Library {
     constructor(name, books = []) {
@@ -97,72 +75,78 @@ class Library {
         }
     }
 
-    findBookBy = function (type, value) {
-        return this.books.find((book) => value === book[type]) || null;
+    findBookBy = function (key, value) {
+        return this.books.find((book) => value === book[key]) || null;
     }
 
     giveBookByName(bookName) {
-        if (this.findBookBy === bookName) {
-            delete Array.books[bookName]
-            return console.log(bookName)
+        const book = this.findBookBy("name", bookName);
+
+        if (book) {
+            let filteredBooks = this.books.filter((book) => bookName !== book.name);
+            console.log(this.books)
+            this.books = filteredBooks;
+            return book
+
         } else {
-            console.log(null)
+            return null
         }
     }
-
-    // giveBookByName = function (bookName) {
-    //     if (bookName === book.name) {
-    //         delete books[bookName]
-    //     } else {
-    //         return console.log(null);
-    //     }
-    // }
 }
 
-// const library = new Library("Библиотека имени Ленина");
-
-// library.addBook(
-//     new DetectiveBook(
-//         "Артур Конан Дойл",F
-//         "Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе",
-//         2019,
-//         1008
-//     )
-// );
-
-// library.addBook(
-//     new FantasticBook(
-//         "Аркадий и Борис Стругацкие",
-//         "Пикник на обочине",
-//         1972,
-//         168
-//     )
-// );
-
-// const sherlock = new PrintEditionItem("Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе", 2019, 1008);
-// const picknick = new FantasticBook("Аркадий и Борис Стругацкие", "Пикник на обочине", 1972, 168);
-
-// console.log(sherlock.releaseDate); //2019
-// console.log(sherlock.state); //100
-// sherlock.fix();
-// console.log(sherlock.state); //100
-
-// console.log(picknick.author); //"Аркадий и Борис Стругацкие"
-// picknick.state = 10;
-// console.log(picknick.state); //10
-// picknick.fix();
-// console.log(picknick.state); //15
-
-// const library = new Library("Библиотека имени Ленина");
-
-// library.addBook(new DetectiveBook("Артур Конан Дойл", "Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе", 2019, 1008));
-// library.addBook(new FantasticBook("Аркадий и Борис Стругацкие", "Пикник на обочине", 1972, 168));
-// library.addBook(new NovelBook("Герберт Уэллс", "Машина времени", 1895, 138));
-// library.addBook(new Magazine("Мурзилка", 1924, 60));
-
-// console.log(library.findBookBy("name", "Властелин колец")); //null
-// console.log(library.findBookBy("releaseDate", 1924).name); //"Мурзилка"
-
-// console.log("Количество книг до выдачи: " + library.books.length); //Количество книг до выдачи: 4
-// library.giveBookByName("Машина времени");
-// console.log("Количество книг после выдачи: " + library.books.length); //Количество книг после выдачи: 3
+function Student(name, gender, age) {
+    this.name = name;
+    this.gender = gender;
+    this.age = age;
+    this.marks = [];
+  }
+  
+  Student.prototype.setSubject = function (subjectName) {
+    this.subject = subjectName;
+  }
+  
+  Student.prototype.addMark = function (mark) {
+    if (this.marks === undefined) {
+      this.marks = [mark];
+    } else {
+      this.marks.push(mark);
+    }
+  }
+  
+  Student.prototype.addMarks = function (...points) {
+    if (this.marks === undefined) {
+      this.marks = points;
+    } else {
+      this.marks.push(...points);
+    }
+  }
+  
+  Student.prototype.getAverage = function () {
+    let initialValue = 0;
+    let sumAllValues = this.marks.reduce((previousValue, currentValue) =>
+      previousValue + currentValue, initialValue);
+    return sumAllValues / this.marks.length;
+  }
+  
+  Student.prototype.exclude = function (reason) {
+    delete this.subject;
+    delete this.marks;
+    this.excluded = reason;
+  }
+    
+  let student1 = new Student("Masha", "Female", 30);
+  student1.setSubject("Geography")
+  student1.addMark(4);
+  student1.addMark(3);
+  student1.addMark(5);
+  student1.addMarks(2, 3, 3);
+  console.log(student1.getAverage());
+  console.log(student1);
+  
+  let student2 = new Student("Misha", "Male", 40);
+  student2.setSubject("Biology")
+  student2.addMarks(2, 3, 3);
+  student2.exclude('low grades');
+  console.log(student2);
+  
+  

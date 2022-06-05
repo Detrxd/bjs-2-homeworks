@@ -122,7 +122,7 @@ describe('Домашнее задание к лекции 5 «Классы»', (
     it('подсчёт средней оценки по предмету', () => {
       student.addMark(3, "algebra");
       student.addMark(5, "algebra");
-      expect(student.getAverageBySubject("algebra")).toEqual(4);
+      expect(student.getAverage("algebra")).toEqual(4);
     });
   
     it('подсчёт общей средней оценки', () => {
