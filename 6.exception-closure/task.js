@@ -3,13 +3,13 @@
 // function parseCount(value) {
 //     let initial = Number.parseInt(value)
 //     if (Number.isNaN(initial) === false) {
-//         throw ("Невалидное значение")
+//         throw new E ("Невалидное значение")
 //     } else {
 //         return console.log(initial);
 //     }
 // }
 
-//(1.1)
+// (1.1)
 
 // function validateCount(index) {
 //     try {
@@ -45,25 +45,24 @@ class Triangle {
         this.c = c;
     }
     getPerimeter = function () {
-       let P = this.a + this.b + this.c;
-        return console.log(P);
+        let P = this.a + this.b + this.c;
+        return P;
     }
-     
-     getArea = function () {
-         newValue = Math.sqrt(P2 / 2((P2 - this.a)(P2 - this.b)(P2 - this.c)))
-         return console.log(newValue.toFixed([3]))
-     }
+
+    getArea = function (perimeter) {
+        let newValue = Math.sqrt((perimeter / 2)*((perimeter - this.a) * (perimeter - this.b) * (perimeter - this.c)))
+        return newValue.toFixed(3);
+    }
 }
 
 const ABC = new Triangle(
     1, 1, 1,
-
 )
 
 ABC.getPerimeter();
 
-let P2 = ABC.getPerimeter;
-ABC.getArea();
+let P2 = ABC.getPerimeter();
+ABC.getArea(P2);
 
 
 // getTriangle = function (d, e, f) {
