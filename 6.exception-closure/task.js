@@ -32,22 +32,22 @@ class Triangle {
 
     getArea() {
         let polu = this.getPerimeter() / 2
-        let newValue = Math.sqrt(polu * ((polu - this.a) * (polu - this.b) * (polu - this.c)))
-        return newValue.toFixed(3);
+        return +(Math.sqrt(polu * (polu - this.a) * (polu - this.b) * (polu - this.c))).toFixed(3);
     };
 }
 
 getTriangle = function (d, e, f) {
     try {
         return new Triangle(d, e, f);
-    } catch (invalidTriangle) {
-        {
-            getArea() = console.log("Ошибка! Треугольник не существует");
-            getPerimeter() = console.log("Ошибка! Треугольник не существует");
-        } 
-        return invalidTriangle;
+    } catch (e) {
+        return {
+            getArea() {
+                return "Ошибка! Треугольник не существует"
+            },
+            getPerimeter() {
+                return "Ошибка! Треугольник не существует"
+            }
+        }
     }
 }
-// const triangle = new Triangle(2,5,5);
-// // console.log(triangle.getPerimeter())
-// console.log(triangle.getArea(triangle.getPerimeter()))
+
