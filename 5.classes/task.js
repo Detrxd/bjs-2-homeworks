@@ -1,27 +1,25 @@
 class PrintEditionItem {
 
-    constructor(name, releaseDate, pagesCount, state = 100, type = null) {
+    constructor(name, releaseDate, pagesCount) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.pagesCount = pagesCount;
-        this.__state = state;
-        this.type = type;
+        this.state = 100;
+        this.type = null;
     }
 
 
     fix() {
-        if (this.state < 100) {
-            this.state = 100;
-            return this.state;
-        }
+        this.state *= 1.5;
     }
 
     set state(value) {
-        if (value === 0) {
-            this.__state = 0
-        }
-        if (value === 100) {
-            this.__state = 100
+        if (value < 0) {
+            this._state = 0;
+        } else if (value > 100) {
+            this.__state = 100;
+        } else {
+            this.__state = value;
         }
     }
 
@@ -31,36 +29,39 @@ class PrintEditionItem {
 }
 
 class Magazine extends PrintEditionItem {
-    constructor(name, releaseDate, pagesCount, state = 100, type = "magazine") {
-        super(name, releaseDate, pagesCount, state, type)
+    constructor(name, releaseDate, pagesCount) {
+        super(name, releaseDate, pagesCount)
+        this.type = "magazine";
     }
 }
 
 class Book extends PrintEditionItem {
-    constructor(author, name, releaseDate, pagesCount, state = 100, type = "book") {
-        super(name, releaseDate, pagesCount, state, type)
+    constructor(author, name, releaseDate, pagesCount) {
+        super(name, releaseDate, pagesCount)
         this.author = author;
+        this.type = "book"
     }
 }
 
 class NovelBook extends Book {
-    constructor(name, author, releaseDate, pagesCount, state = 100, type = "novel") {
-        super(name, author, releaseDate, pagesCount, state, type)
+    constructor(name, author, releaseDate, pagesCount) {
+        super(name, author, releaseDate, pagesCount)
+        this.type = "novel"
 
     }
 }
 
 class FantasticBook extends Book {
-    constructor(name, author, releaseDate, pagesCount, state = 100, type = "fantastic") {
-        super(name, author, releaseDate, pagesCount, state, type)
-
+    constructor(name, author, releaseDate, pagesCount) {
+        super(name, author, releaseDate, pagesCount)
+        this.type = "fantastic"
     }
 }
 
 class DetectiveBook extends Book {
-    constructor(name, author, releaseDate, pagesCount, state = 100, type = "detective") {
-        super(name, author, releaseDate, pagesCount, state, type)
-
+    constructor(name, author, releaseDate, pagesCount) {
+        super(name, author, releaseDate, pagesCount)
+        this.type = "detective"
     }
 }
 
@@ -94,49 +95,59 @@ class Library {
     }
 }
 
-function Student(name, gender, age) {
-    this.name = name;
-    this.gender = gender;
-    this.age = age;
-    this.marks = [];
-}
-
-Student.prototype.setSubject = function (subjectName) {
-    this.subject = subjectName;
-}
-
-Student.prototype.addMark = function (mark, markSubject) {
-    if (this.marks === undefined) {
-        this.marks = [mark];
-    } else {
-        this.marks.push(mark);
+class Student {
+    constructor(name, gender, age) {
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        let studentMark = {
+            subjectNameMark: []
+        }
     }
 
-    this.subject = markSubject;
-    return this.subject;
-}
+    addMark(mark, markSubject) {
+        if ((mark < 0) || (mark > 5)) {
+            throw new Error("Ошибка, оценка должна быть числом от 1 до 5")
+        }
+        if (studentMark === undefined) {
+            studentMark = [mark];
+        } else {
+            this.studentMark.push(mark);
+        }
 
-Student.prototype.addMarks = function (...points) {
-    if (this.marks === undefined) {
-        this.marks = points;
-    } else {
-        this.marks.push(...points);
+        this.subject = markSubject;
+        return this.subject;
+    }
+
+
+
+    getAverage = function () {
+        let initialValue = 0;
+        let sumAllValues = this.marks.reduce((previousValue, currentValue) =>
+            previousValue + currentValue, initialValue);
+        return sumAllValues / this.marks.length;
+    }
+
+    exclude(reason) {
+        delete this.subject;
+        delete this.marks;
+        this.excluded = reason;
     }
 }
 
-Student.prototype.getAverage = function () {
-    let initialValue = 0;
-    let sumAllValues = this.marks.reduce((previousValue, currentValue) =>
-        previousValue + currentValue, initialValue);
-    return sumAllValues / this.marks.length;
-}
 
-Student.prototype.exclude = function (reason) {
-    delete this.subject;
-    delete this.marks;
-    this.excluded = reason;
-}
+const student = new Student("Олег Никифоров")
+student.addMark(5, "algebra")
+student.addMark(3, "algebra")
 
-Student.prototype.getAverageBySubject = function () {
-    console.log(Student.prototype.getAverage() + Student.prototype.setSubject())
-}
+// addMark = function (mark, markSubject) {
+//     if (this.marks === undefined) {
+//         this.marks = [mark];
+//     } else {
+//         this.marks.push(mark);
+//     }
+
+//     this.subject = markSubject;
+//     return this.subject;
+// }
+
