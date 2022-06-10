@@ -1,99 +1,99 @@
-// class PrintEditionItem {
+class PrintEditionItem {
 
-//     constructor(name, releaseDate, pagesCount) {
-//         this.name = name;
-//         this.releaseDate = releaseDate;
-//         this.pagesCount = pagesCount;
-//         this.state = 100;
-//         this.type = null;
-//     }
+    constructor(name, releaseDate, pagesCount) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.pagesCount = pagesCount;
+        this.state = 100;
+        this.type = null;
+    }
 
 
-//     fix() {
-//         this.state *= 1.5;
-//     }
+    fix() {
+        this.state *= 1.5;
+    }
 
-//     set state(value) {
-//         if (value < 0) {
-//             this._state = 0;
-//         } else if (value > 100) {
-//             this.__state = 100;
-//         } else {
-//             this.__state = value;
-//         }
-//     }
+    set state(value) {
+        if (value < 0) {
+            this._state = 0;
+        } else if (value > 100) {
+            this.__state = 100;
+        } else {
+            this.__state = value;
+        }
+    }
 
-//     get state() {
-//         return this.__state;
-//     }
-// }
+    get state() {
+        return this.__state;
+    }
+}
 
-// class Magazine extends PrintEditionItem {
-//     constructor(name, releaseDate, pagesCount) {
-//         super(name, releaseDate, pagesCount)
-//         this.type = "magazine";
-//     }
-// }
+class Magazine extends PrintEditionItem {
+    constructor(name, releaseDate, pagesCount) {
+        super(name, releaseDate, pagesCount)
+        this.type = "magazine";
+    }
+}
 
-// class Book extends PrintEditionItem {
-//     constructor(author, name, releaseDate, pagesCount) {
-//         super(name, releaseDate, pagesCount)
-//         this.author = author;
-//         this.type = "book"
-//     }
-// }
+class Book extends PrintEditionItem {
+    constructor(author, name, releaseDate, pagesCount) {
+        super(name, releaseDate, pagesCount)
+        this.author = author;
+        this.type = "book"
+    }
+}
 
-// class NovelBook extends Book {
-//     constructor(name, author, releaseDate, pagesCount) {
-//         super(name, author, releaseDate, pagesCount)
-//         this.type = "novel"
+class NovelBook extends Book {
+    constructor(name, author, releaseDate, pagesCount) {
+        super(name, author, releaseDate, pagesCount)
+        this.type = "novel"
 
-//     }
-// }
+    }
+}
 
-// class FantasticBook extends Book {
-//     constructor(name, author, releaseDate, pagesCount) {
-//         super(name, author, releaseDate, pagesCount)
-//         this.type = "fantastic"
-//     }
-// }
+class FantasticBook extends Book {
+    constructor(name, author, releaseDate, pagesCount) {
+        super(name, author, releaseDate, pagesCount)
+        this.type = "fantastic"
+    }
+}
 
-// class DetectiveBook extends Book {
-//     constructor(name, author, releaseDate, pagesCount) {
-//         super(name, author, releaseDate, pagesCount)
-//         this.type = "detective"
-//     }
-// }
+class DetectiveBook extends Book {
+    constructor(name, author, releaseDate, pagesCount) {
+        super(name, author, releaseDate, pagesCount)
+        this.type = "detective"
+    }
+}
 
-// class Library {
-//     constructor(name, books = []) {
-//         this.name = name;
-//         this.books = books;
-//     }
-//     addBook(book) {
-//         if (book.state > 30) {
-//             this.books.push(book);
-//         }
-//     }
+class Library {
+    constructor(name, books = []) {
+        this.name = name;
+        this.books = books;
+    }
+    addBook(book) {
+        if (book.state > 30) {
+            this.books.push(book);
+        }
+    }
 
-//     findBookBy = function (key, value) {
-//         return this.books.find((book) => value === book[key]) || null;
-//     }
+    findBookBy = function (key, value) {
+        return this.books.find((book) => value === book[key]) || null;
+    }
 
-//     giveBookByName(bookName) {
-//         const book = this.findBookBy("name", bookName);
+    giveBookByName(bookName) {
+        const book = this.findBookBy("name", bookName);
 
-//         if (book) {
-//             let filteredBooks = this.books.filter((book) => bookName !== book.name);
-//             console.log(this.books)
-//             this.books = filteredBooks;
-//             return book
+        if (book) {
+            let filteredBooks = this.books.filter((book) => bookName !== book.name);
+            console.log(this.books)
+            this.books = filteredBooks;
+            return book
 
-//         } else {
-//             return null
-//         }
-//     }
-// }
+        } else {
+            return null
+        }
+    }
+}
 
 class Student {
     constructor(name, gender, age) {
