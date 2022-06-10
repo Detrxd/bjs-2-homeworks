@@ -144,12 +144,3 @@ class Student {
     }
 
 }
-
-const student = new Student("Олег Никифоров")
-student.addMark(5, "algebra")
-student.addMark(3, "algebra")
-student.addMark(4, "geometry")
-console.log(student);
-
-console.log(student.getAverage());
-console.log(student.getAverageBySubject("algebra"));
