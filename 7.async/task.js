@@ -31,7 +31,22 @@ class AlarmClock {
 
     getCurrentFormattedTime() {
         let date = new Date();
-        return date.getHours() + ":" + date.getMinutes();
+        let minutes;
+        let hours;
+
+        if (date.getHours() < 10) {
+            hours = "0" + date.getHours();
+        } else {
+            hours = date.getHours();
+        }
+
+        if (date.getMinutes() < 10) {
+            minutes = "0" + date.getMinutes();
+        } else {
+            minutes = date.getMinutes();
+        }
+
+        return hours + ":" + minutes;
     }
 
     start() {
@@ -49,21 +64,19 @@ class AlarmClock {
     }
 
     printAlarms() {
-        this.alarmCollection.forEach(printAllAlarms => console.log(printAllAlarms));
+        this.alarmCollection.forEach(func => console.log(`Звонок с id = ${func.id} заведен на время ${func.time}.`));
     }
 
     stop() {
-        if (timerId != id) {
-            return
-        } else {
-            clearInterval(timerId);
-            delete this.timerId;
+        if (this.timerId != null) {
+            clearInterval(this.timerId);
+            this.timerId = null;
         }
     }
 
     clearAlarms() {
         this.stop();
-        delete this.alarmCollection();
+        this.alarmCollection = [];
     }
 }
 
@@ -74,6 +87,7 @@ clock = new AlarmClock();
 clock.addClock("16:45", f => f, 1)
 clock.addClock("16:55", a => a, 3)
 clock.addClock("17:55", b => b, 1)
+console.log(clock.getCurrentFormattedTime());
 
 // console.log(clock);
 // clock.removeClock(1);
