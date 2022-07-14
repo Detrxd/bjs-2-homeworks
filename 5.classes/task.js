@@ -100,32 +100,41 @@ class Student {
         this.name = name;
         this.gender = gender;
         this.age = age;
-        let studentMark = {
-            subjectNameMark: []
-        }
+        this.marks = {}
+
     }
 
     addMark(mark, markSubject) {
         if ((mark < 0) || (mark > 5)) {
             throw new Error("Ошибка, оценка должна быть числом от 1 до 5")
         }
-        if (studentMark === undefined) {
-            studentMark = [mark];
-        } else {
-            this.studentMark.push(mark);
+        if (!this.marks[markSubject]) {
+            this.marks[markSubject] = [];
         }
-
-        this.subject = markSubject;
-        return this.subject;
+        this.marks[markSubject].push(mark);
     }
 
+    getAverage() {
+        let markSum = 0;
+        let markLenght = 0;
 
+        for (const subject in this.marks) {
+            this.marks[subject]
+            markLenght += this.marks[subject].length
+            const totalSum = 0;
+            markSum += this.marks[subject].reduce((acc, curr) => acc + curr, 0)
+        }
+        return markSum / markLenght;
+    }
 
-    getAverage = function () {
-        let initialValue = 0;
-        let sumAllValues = this.marks.reduce((previousValue, currentValue) =>
-            previousValue + currentValue, initialValue);
-        return sumAllValues / this.marks.length;
+    getAverageBySubject(subject) {
+
+        if (!this.marks[subject]) {
+            throw new Error('Ошибка! Нет токого предмета')
+        }
+        let sumMarks = this.marks[subject].reduce((acc, curr) => acc + curr, 0)
+        return sumMarks / this.marks[subject].length;
+
     }
 
     exclude(reason) {
@@ -133,21 +142,5 @@ class Student {
         delete this.marks;
         this.excluded = reason;
     }
+
 }
-
-
-const student = new Student("Олег Никифоров")
-student.addMark(5, "algebra")
-student.addMark(3, "algebra")
-
-// addMark = function (mark, markSubject) {
-//     if (this.marks === undefined) {
-//         this.marks = [mark];
-//     } else {
-//         this.marks.push(mark);
-//     }
-
-//     this.subject = markSubject;
-//     return this.subject;
-// }
-
