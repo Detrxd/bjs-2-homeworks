@@ -16,12 +16,33 @@ function cachingDecoratorNew(func) {
   };
 }
 
-
-function debounceDecoratorNew(func) {
-  // Ваш код
+function debounceDecoratorNew(func, ms) {
+  let flag;
+  return function (...args) {
+    if (flag) {
+      return;
+    }
+    func.apply(this, ...args);
+    flag = true;
+    setTimeout(() => {
+      flag = false;
+    }, ms);
+  }
 }
 
-function debounceDecorator2(func) {
-  // Ваш код
+function debounceDecorator2(func, ms) {
+  let flag;
+  function withCounter(...args) {
+    withCounter.history++;
+    if (flag) {
+      return;
+    }
+    func.apply(this, ...args);
+    flag = true;
+    setTimeout(() => {
+      flag = false;
+    }, ms);
+  }
+  withCounter.history = 0;
+  return withCounter;
 }
-
