@@ -4,36 +4,38 @@ function cachingDecoratorNew(func) {
     hash = args.join(',');
 
     if (hash in cache) {
-      console.log("Из кэша: " + cache[hash]);
+      return "Из кэша: " + cache[hash];
     } else if (Object.keys(cache).length === 5) {
       delete cache[Object.keys(cache)[0]];
       cache[hash] = func.apply(this, args);
-      console.log("Вычисляем: " + cache[hash]);
+      return "Вычисляем: " + cache[hash];
     } else {
       cache[hash] = func.apply(this, args);
-      console.log("Вычисляем: " + cache[hash]);
+      return "Вычисляем: " + cache[hash];
     }
   };
 }
 
-function debounceDecoratorNew(func, ms) {
+function debounceDecoratorNew(func, delay) {
+  let timer;
   let flag;
   return function (...args) {
+    timer = setTimeout(() => {
+      flag = false;
+    }, delay);
+
     if (flag) {
       return;
     }
-    func.apply(this, ...args);
     flag = true;
-    setTimeout(() => {
-      flag = false;
-    }, ms);
+    return func(...args);
   }
 }
 
 function debounceDecorator2(func, ms) {
   let flag;
   function withCounter(...args) {
-    withCounter.history++;
+    withCounter.count++;
     if (flag) {
       return;
     }
@@ -43,6 +45,6 @@ function debounceDecorator2(func, ms) {
       flag = false;
     }, ms);
   }
-  withCounter.history = 0;
+  withCounter.count = 0;
   return withCounter;
 }
