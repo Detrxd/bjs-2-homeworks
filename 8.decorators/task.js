@@ -19,36 +19,31 @@ function cachingDecoratorNew(func) {
 function debounceDecoratorNew(func, delay) {
   let timer;
   let flag = false;
+
   return function (...args) {
     if (!flag) {
-      console.log("Есть вызов");
       func.apply(this, ...args);
       flag = true;
     }
-    console.log(flag);
-    // clearTimeout(timer); Не совсем понимаю почему мы делаем очистку тайм-аута. Вызов не произойдёт, пока не пройдёт N-е время.
+    clearTimeout(timer);
     timer = setTimeout(() => (flag = false), delay);
   };
 }
 
 function debounceDecorator2(func, delay) {
   let flag = false;
-  callCount = 0;
+  let timer;
   function wrapper(...args) {
-    if (flag) {
-      count++;
-      console.log(callCount);
-      return;
+    if (!flag) {
+      wrapper.count.push(args);
+      flag = true;
     }
 
-    console.log(callCount);
-    flag = true;
-
-    wrapper.count.push(callCount);
-    callCount = 0;
-
-    setTimeout(() => (flag = false), delay);
+    clearTimeout(timer);
+    timer = setTimeout(() => (flag = false), delay);
+    return func(...args);
   }
   wrapper.count = [];
+  console.log(wrapper.count);
   return wrapper;
 }
