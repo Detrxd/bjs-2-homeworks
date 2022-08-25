@@ -33,17 +33,14 @@ function debounceDecoratorNew(func, delay) {
 function debounceDecorator2(func, delay) {
   let flag = false;
   let timer;
-  function wrapper(...args) {
+  let count = 0;
+  return function (...args) {
+    count++;
     if (!flag) {
-      wrapper.count.push(args);
+      func.apply(this, ...args);
       flag = true;
     }
-
     clearTimeout(timer);
     timer = setTimeout(() => (flag = false), delay);
-    return func(...args);
-  }
-  wrapper.count = [];
-  console.log(wrapper.count);
-  return wrapper;
+  };
 }
